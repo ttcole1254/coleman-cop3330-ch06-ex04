@@ -12,3 +12,32 @@
 * names[7]=="Joe" then scores[7]==17). Terminate input with NoName 0. Check that each name is unique and
 * terminate with an error message if a name is entered twice. Write out all the (name,score) pairs, one per line.
 */
+
+#include "std_lib_facilities.h"	
+class Name_value {
+    public:
+        Name_value(string n, int s): name(n), score(s) { }
+        string name;
+        int score;
+};
+
+int main()
+{
+    try {
+        vector<Name_value> scores;
+        string n;
+        int s;
+        cout << "Enter a name followed by a score, separated by a space (ex. Jim 17). To finish, type NoName 0: ";
+        while ((cin >> n >> s) && (n != "NoName")) {
+            for (int i = 0; i < scores.size(); ++i) {
+                if (n == scores[i].name) error("You cannot enter a name more than once.");
+            }
+            scores.push_back(Name_value(n, s));
+        }
+        for (int i = 0; i < scores.size(); ++i) {
+            cout << "(" << scores[i].name << "," << scores[i].score << ")\n";
+        }
+    } catch (runtime_error e) {
+        cout << e.what() << "\n";
+    }
+}
